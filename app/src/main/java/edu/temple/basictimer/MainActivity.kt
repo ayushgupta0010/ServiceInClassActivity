@@ -47,11 +47,22 @@ class MainActivity : AppCompatActivity() {
         )
 
         startButton.setOnClickListener {
-            timerBinder?.start(100)
+            timerBinder?.run {
+                if (!isRunning) {
+                    start(100)
+                    startButton.text = "Pause"
+                } else {
+                    pause()
+                    startButton.text = if (isPaused) "Resume" else "Pause"
+                }
+            }
         }
 
         stopButton.setOnClickListener {
-            timerBinder?.stop()
+            timerBinder?.run {
+                stop()
+                startButton.text = "Start"
+            }
         }
     }
 }
