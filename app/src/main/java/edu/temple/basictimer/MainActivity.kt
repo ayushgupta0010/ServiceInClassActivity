@@ -1,6 +1,7 @@
 package edu.temple.basictimer
 
 import android.content.ComponentName
+import android.content.Intent
 import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,12 +42,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startButton.setOnClickListener {
+        bindService(
+            Intent(this, TimerService::class.java), serviceConnection, BIND_AUTO_CREATE
+        )
 
+        startButton.setOnClickListener {
+            timerBinder?.start(100)
         }
 
         stopButton.setOnClickListener {
-
+            timerBinder?.stop()
         }
     }
 }
